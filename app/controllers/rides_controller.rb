@@ -28,8 +28,8 @@ class RidesController < ApplicationController
     ride = Ride.new
     ride.user = user
     ride.attraction = attraction
-    ride.take_ride
-
+    message = ride.take_ride
+    flash[:alert] = message
 
     redirect_to user_path(user)
   end

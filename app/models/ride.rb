@@ -10,6 +10,7 @@ class Ride < ApplicationRecord
       user.happiness += attraction.happiness_rating
       user.nausea += attraction.nausea_rating
       user.save
+      return "Thanks for riding the #{self.attraction.name}!"
     else
       message = ["Sorry."]
       if user.tickets <= attraction.tickets
