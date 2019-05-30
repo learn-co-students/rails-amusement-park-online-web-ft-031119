@@ -1,0 +1,7 @@
+<%= form_tag("/login", method: 'post') do %>
+  Name: <%= select_tag("user_name", options_from_collection_for_select(@users,"name","name")) %>
+  Password:<%= text_field_tag(:password) %>
+  <%= submit_tag("Sign In") %>
+
+
+<% end %>

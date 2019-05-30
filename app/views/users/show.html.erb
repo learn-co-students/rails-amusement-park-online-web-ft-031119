@@ -39,6 +39,7 @@
   <strong>Admin:</strong>
   <%= @user.admin %>
 </p>
-
+<%= link_to 'See attractions', attractions_url%>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
+<%= link_to 'Log Out', signout_url %>

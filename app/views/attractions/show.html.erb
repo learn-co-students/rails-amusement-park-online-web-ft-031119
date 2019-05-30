@@ -22,8 +22,11 @@
 
 <p>
   <strong>Ticket number:</strong>
-  <%= @attraction.ticket_number %>
+  <%= @attraction.tickets %>
 </p>
-
+<%= form_tag({controller: 'rides', action: 'go_on_ride', method: 'post'}) do %>
+  <%= hidden_field_tag "id", @attraction.id%>
+  <input type="submit" value="Go on this ride">
+<% end %>
 <%= link_to 'Edit', edit_attraction_path(@attraction) %> |
 <%= link_to 'Back', attractions_path %>

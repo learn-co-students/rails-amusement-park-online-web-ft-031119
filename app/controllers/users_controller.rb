@@ -1,3 +1,5 @@
+require 'pry'
+
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -10,6 +12,12 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    # binding.pry
+    if session[:user_id] && session[:user_id] == params[:id].to_i
+      render :show
+    else
+      redirect_to '/'
+    end
   end
 
   # GET /users/new
@@ -21,6 +29,23 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def signin
+    @users = User.all
+    render :signin
+  end
+
+  def login
+    # binding.pry
+    # puts "done"
+    user = User.find_by(name: params[:user_name])
+    if user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect_to user_path(user)
+    else
+      redirect_to '/signin'
+    end
+  end
+
   # POST /users
   # POST /users.json
   def create
@@ -28,6 +53,11 @@ class UsersController < ApplicationController
     return redirect_to controller: 'users', action: 'new' unless @user.save
     session[:user_id] = @user.id
     redirect_to user_path(@user)
+  end
+
+  def signout
+    session.delete :user_id
+    redirect_to '/'#controller: 'users', action: 'index'
   end
 
   # PATCH/PUT /users/1
@@ -54,6 +84,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :password, :nausea, :happiness, :tickets, :heigth, :admin)
+      params.require(:user).permit(:name, :password, :nausea, :happiness, :tickets, :height, :admin)
     end
 end

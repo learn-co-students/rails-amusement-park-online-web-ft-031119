@@ -1,3 +1,4 @@
+require 'pry'
 class RidesController < ApplicationController
   before_action :set_ride, only: [:show, :edit, :update, :destroy]
 
@@ -21,6 +22,18 @@ class RidesController < ApplicationController
   def edit
   end
 
+  def go_on_ride
+    user = User.find_by(id: session[:user_id])
+    attraction = Attraction.find_by(id: params[:id])
+    ride = Ride.new
+    ride.user = user
+    ride.attraction = attraction
+    ride.take_ride
+
+
+    redirect_to user_path(user)
+  end
+
   # POST /rides
   # POST /rides.json
   def create
@@ -29,10 +42,8 @@ class RidesController < ApplicationController
     respond_to do |format|
       if @ride.save
         format.html { redirect_to @ride, notice: 'Ride was successfully created.' }
-        format.json { render :show, status: :created, location: @ride }
       else
         format.html { render :new }
-        format.json { render json: @ride.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -46,7 +57,6 @@ class RidesController < ApplicationController
         format.json { render :show, status: :ok, location: @ride }
       else
         format.html { render :edit }
-        format.json { render json: @ride.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -57,15 +67,11 @@ class RidesController < ApplicationController
     @ride.destroy
     respond_to do |format|
       format.html { redirect_to rides_url, notice: 'Ride was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_ride
-      @ride = Ride.find(params[:id])
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ride_params
