@@ -27,13 +27,13 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     return redirect_to controller: 'users', action: 'new' unless @user.save
     session[:user_id] = @user.id
-    redirect_to controller: 'users', action: 'show'
+    redirect_to user_path(@user)
   end
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    @user = User.find_or_create_by(user_params)
+    @user = User.find_or_create_by(name: user_params[:name])
     return redirect_to controller: 'users', action: 'edit' unless @user.save
     session[:user_id] = @user.id
     redirect_to controller: 'users', action: 'show'
