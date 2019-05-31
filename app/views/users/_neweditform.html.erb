@@ -1,0 +1,22 @@
+<%=form_for(@user) do |user| %>
+
+	<%=user.label :name%>
+	<%=user.text_field :name%>
+
+	<%=user.label :password%>
+	<%=user.text_field :password%>
+
+	<%=user.label :happiness%>
+	<%=user.text_field :happiness%>
+
+	<%=user.label :nausea%>
+	<%=user.text_field :nausea%>
+
+	<%=user.label :tickets%>
+	<%=user.text_field :tickets%>
+
+	<%=user.label :height%>
+	<%=user.text_field :height%>
+
+	<%=user.submit "Create User" %>
+<%end%>
