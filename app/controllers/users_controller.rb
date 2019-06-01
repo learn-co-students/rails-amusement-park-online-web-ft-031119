@@ -8,17 +8,18 @@ class UsersController < ApplicationController
 		@user = User.new
 	end
 
-	def show 
+	def show
 		@user = User.find_by(id: params[:id])
 	end
 
 	def create
-		if user = User.create(user_params)
-			session[:user_id] = user.id
-			redirect_to user
-		else
-			redirect_to users_path
-		end
+		 user = User.create(user_params)
+			if user.valid?
+				session[:user_id] = user.id
+				redirect_to user
+			else
+				redirect_to root_path
+			end
 	end
 
 	def edit
@@ -27,6 +28,10 @@ class UsersController < ApplicationController
 
 	def destroy
 
+	end
+
+	def signin
+	
 	end
 
 	private 

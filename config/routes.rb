@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
 	root 'homeview#welcome'
 
-	get 'signin', to: 'users#signin'
+	get 'signin', to: 'sessions#new'
+	post 'signin', to: 'sessions#create'
 end
