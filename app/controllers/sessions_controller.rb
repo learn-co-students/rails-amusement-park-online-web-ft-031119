@@ -15,8 +15,14 @@ class SessionsController < ApplicationController
 		
 	end
 
-	def destroy
-		# session.clear
+	def logout
+		
+		if session
+			session.destroy
+			redirect_to root_path
+		end
 	end
+
+	
 
 end
