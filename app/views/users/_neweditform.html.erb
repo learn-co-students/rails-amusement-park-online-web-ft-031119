@@ -1,22 +1,29 @@
+Sign Up : <!-- ,,|, --> 
 <%=form_for(@user) do |user| %>
 
 	<%=user.label :name%>
-	<%=user.text_field :name%>
+	<%=user.text_field :name%></br>
 
 	<%=user.label :password%>
-	<%=user.text_field :password%>
+	<%=user.text_field :password%></br>
 
 	<%=user.label :happiness%>
-	<%=user.text_field :happiness%>
+	<%=user.text_field :happiness%></br>
 
 	<%=user.label :nausea%>
-	<%=user.text_field :nausea%>
+	<%=user.text_field :nausea%></br>
 
 	<%=user.label :tickets%>
-	<%=user.text_field :tickets%>
+	<%=user.text_field :tickets%></br>
 
 	<%=user.label :height%>
-	<%=user.text_field :height%>
+	<%=user.text_field :height%></br>
+
+
+	<%=user.label :admin%>
+	<%=user.check_box :admin%></br>
 
 	<%=user.submit "Create User" %>
+
 <%end%>
+

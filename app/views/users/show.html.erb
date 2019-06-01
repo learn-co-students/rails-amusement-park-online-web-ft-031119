@@ -2,4 +2,6 @@
 <p>Mood: <%=@user.mood%></p>
 <p>Tickets: <%=@user.tickets%></p>
 <p>Height: <%=@user.height%></p>
-
+<% if @user.admin == true %>
+	<p>ADMIN</p>
+<%end%>

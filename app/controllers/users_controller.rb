@@ -9,17 +9,20 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@user = User.find_by(id: params[:id])
+		if session[:user_id].present?
+			@user = User.find_by(id: params[:id])
+		else
+			redirect_to root_path
+		end
 	end
 
 	def create
-		 user = User.create(user_params)
-			if user.valid?
-				session[:user_id] = user.id
-				redirect_to user
-			else
-				redirect_to root_path
-			end
+		if user = User.create(user_params)
+			session[:user_id] = user.id
+			redirect_to user_path(user)
+		else
+			render :new
+		end
 	end
 
 	def edit
