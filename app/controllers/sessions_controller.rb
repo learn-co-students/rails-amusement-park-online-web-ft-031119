@@ -1,28 +1,21 @@
 class SessionsController < ApplicationController
-	# helper_method :current_user
+  def new
+  end
 
-	def new
+  def create
+    user = User.find_by(:name => params[:user][:name])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect_to user_path(user)
+    else
+      render :new
+    end
+  end
 
-	end
-
-	def create
-
-		user = User.find_by(name: params[:user][:name])
-
-		redirect_to root_path unless user && user.authenticate(params[:password])
-			session[:user_id] = user.id
-			redirect_to user_path(user)
-		
-	end
-
-	def logout
-		
-		if session
-			session.destroy
-			redirect_to root_path
-		end
-	end
-
-	
-
+  def destroy
+    if current_user
+      session.delete :user_id
+      redirect_to root_url
+    end
+  end
 end

@@ -1,45 +1,28 @@
 class UsersController < ApplicationController
-	
-	def index
+  before_action :require_login, except: [:new, :create]
+  
+  def new
+    @user = User.new
+  end
 
-	end
-	
-	def new 
-		@user = User.new
-	end
+  def create
+    user = User.create(user_params)
+    if user.valid?
+      session[:user_id] = user.id
+      redirect_to user_path(user)
+    else
+      render :new
+    end
+  end
 
-	def show
-		if session[:user_id].present?
-			@user = User.find_by(id: params[:id])
-		else
-			redirect_to root_path
-		end
-	end
+  def show
+    @user = User.find_by(:id => params[:id])
+  end
 
-	def create
-		if user = User.create(user_params)
-			session[:user_id] = user.id
-			redirect_to user_path(user)
-		else
-			render :new
-		end
-	end
+  private
 
-	def edit
+  def user_params
+    params.require(:user).permit(:name, :height, :happiness, :nausea, :tickets, :password, :admin)
+  end
 
-	end
-
-	def destroy
-
-	end
-
-	def signin
-	
-	end
-
-	private 
-
-		def user_params
-			params.require(:user).permit(:name, :password, :tickets, :nausea, :happiness, :height, :admin)
-		end
 end

@@ -1,48 +1,45 @@
 class AttractionsController < ApplicationController
-	
-	def index
-		@attractions = Attraction.all
-	end
+  before_action :find_attraction, only: [:show, :edit, :update]
+  before_action :admin_only, except: [:index, :show]
 
-	def new 
+  def index
+    @attractions = Attraction.all
+  end
 
-	end
+  def new
+    @attraction = Attraction.new
+  end
 
-	def show 
-		@attraction = Attraction.find(params[:id])
-	end
+  def create
+    @attraction = Attraction.create(attraction_params)
+    if @attraction
+      redirect_to attraction_path(@attraction)
+    else
+      render :new
+    end
+  end
 
-	def create
+  def show
+  end
 
-	end
+  def edit
+  end
 
-	def edit
+  def update
+    @attraction.update(attraction_params)
+    if @attraction.save
+      redirect_to attraction_path(@attraction)
+    else
+      render :edit
+    end
+  end
 
-	end
+  private
+  def find_attraction
+    @attraction = Attraction.find_by(id: params[:id])
+  end
 
-	def destroy
-
-	end
-
-	private 
-
-		def attraction_params
-			params.require(:attraction).permit(:name, :tickets, :nausea_rating, :happiness_rating, :min_height)
-		end
+  def attraction_params
+    params.require(:attraction).permit(:name, :min_height, :happiness_rating, :nausea_rating, :tickets)
+  end
 end
-
-#FOR SHOW PAGE 
-
-# <% unless current_user.admin %>
-# <%= form_tag attractions_ride_path do %>
-# <%= hidden_field_tag :user_id, current_user.id %>
-# <%= hidden_field_tag :attraction_id, @attraction.id %>
-# <%= submit_tag 'Go on this ride' %>
-# <% end %>
-# <% end %>
-# <%= link_to 'Edit Attraction', edit_attraction_path(@attraction) if current_user.admin %><br />
-# <%= link_to 'Back', attractions_path %> 
-
-# <%= form_tag @attraction do %>
-# <p><%= radio_button_tag "Go on this ride", @attraction.go_on_ride%></p>
-# <% end %> 

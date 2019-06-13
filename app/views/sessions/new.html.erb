@@ -1,12 +1,10 @@
-<h1>Sign In</h1> 
-<%= form_tag("/signin", method: "post") do %> 
-<%= hidden_field_tag :authenticity_token, form_authenticity_token %></br>
+<h1> Sign In </h1>
+    <br>
+    <%= form_tag("/signin", method: "post") do %>
+    <h2>Your name: </h2>
+    <%= collection_select(:user, :name, User.all, :name, :name) %><br />
+    <h2>Your password: </h2>
+    <%= password_field_tag :password%><br><br>
+    <%= submit_tag "Sign In"%>
 
-<p>Select a User:</p> 
-<%= collection_select(:user, :name, User.all, :name, :name) %><br /> 
-
-<p>Password: 
-<%= password_field_tag :password %></p> 
-<%= submit_tag "Sign In" %> 
-
-<% end %> 
+  <% end %>
