@@ -1,0 +1,28 @@
+<h1>Welcome <%= @user.name %></h1>
+
+<% if flash[:message] %>
+    <div class="center alert">
+        <p><%= flash[:message] %></p>
+    </div>
+<% end %>
+
+<% if @user.admin %>
+<h2>ADMIN</h2>
+<% end %>
+
+<p>Tickets: <%= @user.tickets %></p>
+
+<p>Nausea: <%= @user.nausea %></p>
+
+<p>Height: <%= @user.height %></p>
+
+<p>Happiness: <%= @user.happiness %></p>
+
+<% if @user.admin == false %>
+<p>Current Mood: <%= @user.mood %></p>
+<% end %>
+
+
+<%= link_to "See attractions", attractions_path %>
+
+<%= link_to "Log Out", sessions_delete_path, method: :delete %>
